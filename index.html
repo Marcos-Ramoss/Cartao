@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão Virtual de Amor ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Corações caindo -->
+        <div class="hearts-container">
+            <div class="heart">❤️</div>
+            <div class="heart">💖</div>
+            <div class="heart">💕</div>
+            <div class="heart">💗</div>
+            <div class="heart">💓</div>
+            <div class="heart">💝</div>
+            <div class="heart">💘</div>
+            <div class="heart">💞</div>
+        </div>
+
+        <!-- Cartão principal -->
+        <div class="card">
+            <div class="card-header">
+                <h1>💕 Para Você 💕</h1>
+                <p class="subtitle">Um cartão especial com muito amor</p>
+            </div>
+
+            <!-- Botões interativos -->
+            <div class="buttons-container">
+                <button class="btn surprise-btn" onclick="showSurprise()">
+                    🎁 Clique para uma surpresa
+                </button>
+                <button class="btn mirror-btn" onclick="showMirror()">
+                    👀 Clique para ver como eu te vejo
+                </button>
+            </div>
+
+            <!-- Carta romântica -->
+            <div class="letter-container">
+                <div class="letter">
+                    <div class="letter-header">
+                        <span class="date">Xaudades do meu mohzin</span>
+                    </div>
+                    <div class="letter-content">
+                        <p>Oi, meu amor! 💖</p>
+                        <p>Hoje eu quis fazer algo diferente… algo que fosse só nosso.<br>
+                        Então preparei esse pequeno cantinho virtual pra te lembrar do quanto você é especial pra mim.</p>
+                        <p>Acordar com sua mensagem de "bom dia" já deixa meu dia mais leve. Saber se você dormiu bem ou se está comendo direitinho me importa de verdade — porque cuidar de você, mesmo à distância, virou parte da minha rotina e do que me faz feliz.</p>
+                        <p>Nossas conversas, risadas e até os joguinhos que a gente joga juntos — seja no LUDUS, dominó ou quando você me empurra no Stumble Guys 😂 — são momentos que eu guardo com carinho. Cada pequena coisa que a gente compartilha vira uma lembrança boa no meu coração.</p>
+                        <p>Você é a melhor parte dos meus dias.<br>
+                        E só queria te lembrar disso hoje.<br>
+                        Minha pinxecha! 💕</p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Surpresa -->
+            <div class="surprise" id="surprise">
+                <div class="surprise-content">
+                    <h2>🎉 Surpresa! 🎉</h2>
+                    <p>Melhor coisa foi te conhecer e manda aquela mensagem no instagram, dia em que conheci minha pro player</p>
+                    <div class="sparkles">
+                        <span>✨</span>
+                        <span>💫</span>
+                        <span>⭐</span>
+                        <span>🌟</span>
+                    </div>
+                    <button class="btn close-btn" onclick="hideSurprise()">Fechar</button>
+                </div>
+            </div>
+
+            <!-- Espelho/Webcam -->
+            <div class="mirror-container" id="mirror">
+                <div class="mirror-frame">
+                    <h3>Como eu te vejo... 💕</h3>
+                    <video id="webcam" autoplay playsinline></video>
+                    <div class="mirror-overlay">
+                        <p>Você é linda(o) demais! 😍</p>
+                    </div>
+                    <button class="btn close-btn" onclick="hideMirror()">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Feito com ❤️ para você</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
