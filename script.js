@@ -14,6 +14,50 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Adicionar efeitos de partículas
     createParticles();
+    
+    // Detectar se é dispositivo móvel
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // Reduzir intensidade das animações em mobile
+        const floatingElements = document.querySelectorAll('.floating-image, .floating-gif');
+        floatingElements.forEach(element => {
+            element.style.animationDuration = '12s';
+        });
+        
+        // Otimizar para touch
+        optimizeForTouch();
+    }
+    
+    // Efeitos para as imagens flutuantes
+    const floatingImages = document.querySelectorAll('.floating-image, .floating-gif');
+    
+    floatingImages.forEach(image => {
+        image.style.pointerEvents = 'auto';
+        image.style.cursor = 'pointer';
+        
+        // Usar touchstart para mobile e click para desktop
+        const eventType = isMobile ? 'touchstart' : 'click';
+        
+        image.addEventListener(eventType, function(e) {
+            if (eventType === 'touchstart') {
+                e.preventDefault(); // Prevenir zoom em mobile
+            }
+            
+            // Efeito de clique
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+            
+            // Criar partículas especiais (reduzidas em mobile)
+            if (isMobile) {
+                createMobileImageParticles(this);
+            } else {
+                createImageParticles(this);
+            }
+        });
+    });
 });
 
 // Efeito de digitação na carta
@@ -370,4 +414,111 @@ shakeStyle.textContent = `
         75% { transform: translateX(5px); }
     }
 `;
-document.head.appendChild(shakeStyle); 
+document.head.appendChild(shakeStyle);
+
+// Criar partículas especiais quando clicar nas imagens
+function createImageParticles(imageElement) {
+    const rect = imageElement.getBoundingClientRect();
+    const colors = ['#ff6b9d', '#c44569', '#ffb3d1', '#e91e63', '#ff4081'];
+    
+    for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${rect.left + rect.width / 2}px;
+            top: ${rect.top + rect.height / 2}px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1002;
+            animation: imageParticle ${Math.random() * 2 + 1}s ease-out forwards;
+        `;
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 3000);
+    }
+}
+
+// Adicionar CSS para partículas das imagens
+const imageParticleStyle = document.createElement('style');
+imageParticleStyle.textContent = `
+    @keyframes imageParticle {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(imageParticleStyle);
+
+// Otimizar para dispositivos touch
+function optimizeForTouch() {
+    // Reduzir número de partículas em mobile
+    const heartsContainer = document.querySelector('.hearts-container');
+    const hearts = heartsContainer.querySelectorAll('.heart');
+    
+    // Manter apenas alguns corações em mobile para melhor performance
+    if (hearts.length > 4) {
+        for (let i = 4; i < hearts.length; i++) {
+            hearts[i].style.display = 'none';
+        }
+    }
+    
+    // Reduzir frequência de criação de novos corações
+    clearInterval(window.heartInterval);
+    window.heartInterval = setInterval(addMoreHearts, 5000); // A cada 5 segundos em vez de 3
+}
+
+// Criar partículas otimizadas para mobile
+function createMobileImageParticles(imageElement) {
+    const rect = imageElement.getBoundingClientRect();
+    const colors = ['#ff6b9d', '#c44569', '#ffb3d1'];
+    
+    // Menos partículas em mobile
+    for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${rect.left + rect.width / 2}px;
+            top: ${rect.top + rect.height / 2}px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1002;
+            animation: mobileImageParticle ${Math.random() * 1.5 + 0.8}s ease-out forwards;
+        `;
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 2000);
+    }
+}
+
+// Adicionar CSS para partículas mobile
+const mobileParticleStyle = document.createElement('style');
+mobileParticleStyle.textContent = `
+    @keyframes mobileImageParticle {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(mobileParticleStyle); 
